@@ -245,8 +245,6 @@ export default function App() {
       const safeIgn = sanitizeFileName(trimmedIgn);
       const folder = zip.folder(safeIgn) || zip;
       const baseId = Date.now();
-
-      const baseId = Date.now();
       const startX = -500;
       const startY = -500;
       const stepX = 220;
