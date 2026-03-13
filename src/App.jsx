@@ -234,7 +234,7 @@ export default function App() {
       const classified = classifyItems(data.items);
 
       if (!classified.body || !classified.head || !classified.hair || !classified.face) {
-        throw new Error("Could not find all required slots: Body, Head, Hair, Face.");
+        throw new Error("Could not find all required slots. Your character likely has a very new item that cannot be loaded. Please ask Sparrow to generate the Emoji for you instead.");
       }
 
       setSlotIds(classified);
