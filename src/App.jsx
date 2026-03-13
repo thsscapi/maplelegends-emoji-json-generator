@@ -346,7 +346,7 @@ export default function App() {
             <li>Download the ZIP file above and unzip it.</li>
             <li>Go to https://maples.im</li>
             <li>Mouseover the "+" icon below and click Import Character</li>
-            <li>Navigate to your unzipped folder and select all the JSON files</li>
+            <li>Navigate to your unzipped folder, select some or all JSON files, click Open</li>
             <li>Right-click the image you want and save it</li>
           </ol>
         </div>
