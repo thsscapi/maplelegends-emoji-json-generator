@@ -1,9 +1,4 @@
-import express from "express";
-
-const app = express();
-const PORT = 3001;
-
-app.get("/api/avatar", async (req, res) => {
+export default async function handler(req, res) {
   try {
     const ign = String(req.query.ign || "").trim();
 
@@ -36,14 +31,10 @@ app.get("/api/avatar", async (req, res) => {
     const decoded = decodeURIComponent(match[1]);
     const items = JSON.parse(`[${decoded}]`);
 
-    return res.json({ items, finalUrl });
+    return res.status(200).json({ items, finalUrl });
   } catch (error) {
     return res.status(500).json({
       error: error instanceof Error ? error.message : "Unknown server error.",
     });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`API running at http://localhost:${PORT}`);
-});
+}
