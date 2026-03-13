@@ -81,7 +81,7 @@ function classifyItems(items) {
   return out;
 }
 
-function buildJson(slotIds, emotion, uniqueId) {
+function buildJson(slotIds, emotion, uniqueId, x, y) {
   if (!slotIds.body || !slotIds.head || !slotIds.hair || !slotIds.face) {
     throw new Error("Missing required slots: Body, Head, Hair, or Face.");
   }
@@ -153,8 +153,8 @@ function buildJson(slotIds, emotion, uniqueId) {
     selectedItems,
     visible: true,
     position: {
-      x: 0,
-      y: 0,
+      x,
+      y,
     },
   };
 }
@@ -246,10 +246,22 @@ export default function App() {
       const folder = zip.folder(safeIgn) || zip;
       const baseId = Date.now();
 
+      const baseId = Date.now();
+      const startX = -500;
+      const startY = -500;
+      const stepX = 220;
+      const stepY = 220;
+
       EMOTIONS.forEach((emotion, index) => {
-        const json = buildJson(classified, emotion, baseId + index + 1);
+        const col = index % 5;
+        const row = Math.floor(index / 5);
+        const x = startX + col * stepX;
+        const y = startY + row * stepY;
+
+        const json = buildJson(classified, emotion, baseId + index + 1, x, y);
+
         folder.file(
-          `${safeIgn}_${emotion}.json`,
+          `${safeIgn}_${String(index + 1).padStart(2, "0")}_${emotion}.json`,
           JSON.stringify(json, null, 2)
         );
       });
