@@ -344,7 +344,7 @@ export default function App() {
           <ol>
             <li>Enter IGN of the character and click Generate.</li>
             <li>Download the ZIP file above and unzip it.</li>
-            <li>Go to https://maples.im</li>
+            <li>Go to <a href="https://maples.im" target="_blank">https://maples.im</a></li>
             <li>Mouseover the "+" icon below and click Import Character</li>
             <li>Navigate to your unzipped folder, select some or all JSON files, click Open</li>
             <li>Right-click the image you want and save it</li>
