@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     }
 
     const response = await fetch(
-      `https://maplelegends.com/api/getavatar?name=${encodeURIComponent(ign)}`,
+      `https://legends.ml/api/getavatar?name=${encodeURIComponent(ign)}`,
       { redirect: "follow" }
     );
 
