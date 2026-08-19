@@ -39,41 +39,50 @@ function classifyItems(items) {
     faceAccessory: null,
     eyeDecoration: null,
     earrings: null,
+    itemSources: {},
   };
+
+  function setSlot(slot, item) {
+    out[slot] = item.itemId;
+    out.itemSources[slot] = {
+      region: item.region || "GMS",
+      version: String(item.version || "265"),
+    };
+  }
 
   for (const item of items) {
     const id = item.itemId;
 
     if (out.body === null && id >= 2000 && id < 3000) {
-      out.body = id;
+      setSlot("body", item);
       continue;
     }
     if (out.head === null && id >= 12000 && id < 13000) {
-      out.head = id;
+      setSlot("head", item);
       continue;
     }
     if (out.hair === null && id >= 30000 && id < 50000) {
-      out.hair = id;
+      setSlot("hair", item);
       continue;
     }
     if (out.face === null && id >= 20000 && id < 30000) {
-      out.face = id;
+      setSlot("face", item);
       continue;
     }
     if (out.hat === null && id >= 1000000 && id < 1010000) {
-      out.hat = id;
+      setSlot("hat", item);
       continue;
     }
     if (out.faceAccessory === null && id >= 1010000 && id < 1020000) {
-      out.faceAccessory = id;
+      setSlot("faceAccessory", item);
       continue;
     }
     if (out.eyeDecoration === null && id >= 1020000 && id < 1030000) {
-      out.eyeDecoration = id;
+      setSlot("eyeDecoration", item);
       continue;
     }
     if (out.earrings === null && id >= 1030000 && id < 1040000) {
-      out.earrings = id;
+      setSlot("earrings", item);
       continue;
     }
   }
@@ -86,60 +95,39 @@ function buildJson(slotIds, emotion, uniqueId, x, y) {
     throw new Error("Missing required slots: Body, Head, Hair, or Face.");
   }
 
+  function itemSource(slot) {
+    return slotIds.itemSources?.[slot] || { region: "GMS", version: "265" };
+  }
+
+  function selectedItem(slot, id, extra = {}) {
+    return {
+      id,
+      ...itemSource(slot),
+      ...extra,
+    };
+  }
+
   const selectedItems = {
-    Body: {
-      id: slotIds.body,
-      region: "GMS",
-      version: "265",
-      alpha: 0,
-    },
-    Head: {
-      id: slotIds.head,
-      region: "GMS",
-      version: "265",
-    },
-    Hair: {
-      id: slotIds.hair,
-      region: "GMS",
-      version: "265",
-    },
-    Face: {
-      id: slotIds.face,
-      region: "GMS",
-      version: "265",
-    },
+    Body: selectedItem("body", slotIds.body, { alpha: 0 }),
+    Head: selectedItem("head", slotIds.head),
+    Hair: selectedItem("hair", slotIds.hair),
+    Face: selectedItem("face", slotIds.face),
   };
 
   if (slotIds.eyeDecoration) {
-    selectedItems["Eye Decoration"] = {
-      id: slotIds.eyeDecoration,
-      region: "GMS",
-      version: "265",
-    };
+    selectedItems["Eye Decoration"] = selectedItem("eyeDecoration", slotIds.eyeDecoration);
   }
 
   if (slotIds.faceAccessory) {
-    selectedItems["Face Accessory"] = {
-      id: slotIds.faceAccessory,
-      region: "GMS",
-      version: "265",
-    };
+    selectedItems["Face Accessory"] = selectedItem("faceAccessory", slotIds.faceAccessory);
   }
 
   if (slotIds.hat) {
-    selectedItems.Hat = {
-      id: slotIds.hat,
-      region: "GMS",
-      version: "265",
-    };
+    selectedItems.Hat = selectedItem("hat", slotIds.hat);
   }
 
   if (slotIds.earrings) {
-    selectedItems.Earrings = {
-      id: slotIds.earrings,
-      region: "GMS",
-      version: "265",
-    };
+    selectedItems.Earrings = selectedItem("earrings", slotIds.earrings);
   }
 
   return {
