@@ -61,7 +61,7 @@ function classifyItems(items) {
       setSlot("head", item);
       continue;
     }
-    if (out.hair === null && id >= 30000 && id < 50000) {
+    if (out.hair === null && id >= 30000 && id < 70000) {
       setSlot("hair", item);
       continue;
     }
